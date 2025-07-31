@@ -1547,17 +1547,36 @@
             });
 
         });
+ <script>
+    const chatBtn = document.getElementById("chatToggleBtn");
+    const chatModal = document.getElementById("chatModal");
+    const chatInput = document.getElementById("chatInput");
+    const chatMessages = document.getElementById("chatMessages");
+    const sendBtn = document.getElementById("sendBtn");
 
-    </script>
-    <div id="chatbot" style="display:none; position:fixed; bottom:20px; right:20px; width:350px; height:500px; background:white; border-radius:10px; overflow:hidden; box-shadow: 0 0 20px rgba(0,0,0,0.5); z-index:1001;">
- <iframe src="https://chat.openai.com" width="100%" height="100%" frameborder="0"></iframe>
-</div>
-<script>
-  function toggleChatbot() {
-    const bot = document.getElementById('chatbot');
-    bot.style.display = bot.style.display === 'none' ? 'block' : 'none';
-  }
-</script>
+    chatBtn.addEventListener("click", () => {
+      chatModal.style.display = chatModal.style.display === "flex" ? "none" : "flex";
+    });
+
+    sendBtn.addEventListener("click", async () => {
+      const userMessage = chatInput.value.trim();
+      if (!userMessage) return;
+
+      chatMessages.innerHTML += `<div><strong>You:</strong> ${userMessage}</div>`;
+      chatInput.value = "";
+
+      const response = await fetch("https://synagent-backend.onrender.com/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: userMessage })
+      });
+
+      const data = await response.json();
+      const reply = data.answer || "Sorry, something went wrong.";
+      chatMessages.innerHTML += `<div><strong>SynAgent:</strong> ${reply}</div>`;
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    });
+  </script>
 
 </body>
 
