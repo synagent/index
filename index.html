@@ -1,124 +1,1553 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SynAgent | AI Assistant for Your Business</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0f0f0f;
-      color: #ffffff;
-      text-align: center;
-    }
-    .hero {
-      padding: 100px 20px;
-    }
-    .cta-button {
-      background-color: #00b894;
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    .cta-button:hover {
-      background-color: #019875;
-    }
 
-    /* Chat Modal Styling */
-    .chat-modal {
-      display: none;
-      position: fixed;
-      bottom: 10%;
-      right: 5%;
-      width: 350px;
-      background: #111;
-      border: 1px solid #444;
-      color: white;
-      padding: 15px;
-      border-radius: 10px;
-      z-index: 999;
-    }
-    .chat-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .chat-log {
-      height: 200px;
-      overflow-y: auto;
-      margin: 10px 0;
-      background: #222;
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 14px;
-      text-align: left;
-    }
-    #chatInput {
-      width: 100%;
-      padding: 8px;
-      border: none;
-      border-radius: 5px;
-      background-color: #333;
-      color: white;
-    }
-  </style>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SynAgent - Smart AI</title>
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+
+        body {
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
+
+            color: #ffffff;
+
+            line-height: 1.6;
+
+            overflow-x: hidden;
+
+        }
+
+
+
+        .container {
+
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 0 20px;
+
+        }
+
+
+
+        /* Navigation */
+
+        nav {
+
+            position: fixed;
+
+            top: 0;
+
+            width: 100%;
+
+            background: rgba(15, 20, 25, 0.95);
+
+            backdrop-filter: blur(10px);
+
+            z-index: 1000;
+
+            padding: 1rem 0;
+
+            transition: all 0.3s ease;
+
+        }
+
+
+
+        .nav-container {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 0 20px;
+
+        }
+
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            font-size: 1.5rem;
+
+            font-weight: bold;
+
+        }
+
+
+
+        .logo-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            margin-right: 10px;
+
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="white" stroke-width="4"/><circle cx="50" cy="50" r="4" fill="white"/><circle cx="30" cy="35" r="4" fill="white"/><circle cx="70" cy="35" r="4" fill="white"/><circle cx="35" cy="70" r="4" fill="white"/><circle cx="65" cy="70" r="4" fill="white"/><line x1="50" y1="50" x2="30" y2="35" stroke="white" stroke-width="2"/><line x1="50" y1="50" x2="70" y2="35" stroke="white" stroke-width="2"/><line x1="50" y1="50" x2="35" y2="70" stroke="white" stroke-width="2"/><line x1="50" y1="50" x2="65" y2="70" stroke="white" stroke-width="2"/></svg>') center/contain no-repeat;
+
+        }
+
+
+
+        .nav-links {
+
+            display: flex;
+
+            list-style: none;
+
+            gap: 2rem;
+
+        }
+
+
+
+        .nav-links a {
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            transition: color 0.3s ease;
+
+        }
+
+
+
+        .nav-links a:hover {
+
+            color: #64b5f6;
+
+        }
+
+
+
+        .cta-button {
+
+            background: linear-gradient(45deg, #2196f3, #21cbf3);
+
+            color: white;
+
+            padding: 0.75rem 1.5rem;
+
+            border: none;
+
+            border-radius: 25px;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            transition: all 0.3s ease;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .cta-button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 10px 25px rgba(33, 150, 243, 0.3);
+
+        }
+
+
+
+        /* Hero Section */
+
+        .hero {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+
+        .hero::before {
+
+            content: '';
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: 0;
+
+            background: radial-gradient(circle at 30% 70%, rgba(33, 150, 243, 0.1) 0%, transparent 50%),
+
+                        radial-gradient(circle at 70% 30%, rgba(33, 203, 243, 0.1) 0%, transparent 50%);
+
+            animation: float 6s ease-in-out infinite;
+
+        }
+
+
+
+        @keyframes float {
+
+            0%, 100% { transform: translateY(0px) scale(1); }
+
+            50% { transform: translateY(-20px) scale(1.05); }
+
+        }
+
+
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            animation: fadeInUp 1s ease-out;
+
+        }
+
+
+
+        @keyframes fadeInUp {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(30px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+
+
+        .hero-logo {
+
+            width: 120px;
+
+            height: 120px;
+
+            margin: 0 auto 2rem;
+
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="white" stroke-width="3"/><circle cx="50" cy="50" r="4" fill="white"/><circle cx="30" cy="35" r="4" fill="white"/><circle cx="70" cy="35" r="4" fill="white"/><circle cx="35" cy="70" r="4" fill="white"/><circle cx="65" cy="70" r="4" fill="white"/><line x1="50" y1="50" x2="30" y2="35" stroke="white" stroke-width="2"/><line x1="50" y1="50" x2="70" y2="35" stroke="white" stroke-width="2"/><line x1="50" y1="50" x2="35" y2="70" stroke="white" stroke-width="2"/><line x1="50" y1="50" x2="65" y2="70" stroke="white" stroke-width="2"/></svg>') center/contain no-repeat;
+
+            animation: pulse 2s infinite;
+
+        }
+
+
+
+        @keyframes pulse {
+
+            0%, 100% { transform: scale(1); }
+
+            50% { transform: scale(1.05); }
+
+        }
+
+
+
+        .hero h1 {
+
+            font-size: 3.5rem;
+
+            font-weight: 700;
+
+            margin-bottom: 1rem;
+
+            background: linear-gradient(45deg, #ffffff, #64b5f6);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+
+        }
+
+
+
+        .hero p {
+
+            font-size: 1.25rem;
+
+            margin-bottom: 2rem;
+
+            opacity: 0.9;
+
+            max-width: 600px;
+
+            margin-left: auto;
+
+            margin-right: auto;
+
+        }
+
+
+
+        .hero-buttons {
+
+            display: flex;
+
+            gap: 1rem;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+        }
+
+
+
+        .btn-secondary {
+
+            background: transparent;
+
+            color: white;
+
+            padding: 0.75rem 1.5rem;
+
+            border: 2px solid rgba(255, 255, 255, 0.3);
+
+            border-radius: 25px;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            transition: all 0.3s ease;
+
+        }
+
+
+
+        .btn-secondary:hover {
+
+            background: rgba(255, 255, 255, 0.1);
+
+            border-color: #64b5f6;
+
+            transform: translateY(-2px);
+
+        }
+
+
+
+        /* Features Section */
+
+        .section {
+
+            padding: 100px 0;
+
+            position: relative;
+
+        }
+
+
+
+        .section-title {
+
+            text-align: center;
+
+            font-size: 2.5rem;
+
+            margin-bottom: 3rem;
+
+            background: linear-gradient(45deg, #ffffff, #64b5f6);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+
+        }
+
+
+
+        .features-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+            gap: 2rem;
+
+            margin-top: 4rem;
+
+        }
+
+
+
+        .feature-card {
+
+            background: rgba(255, 255, 255, 0.05);
+
+            backdrop-filter: blur(10px);
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            border-radius: 20px;
+
+            padding: 2rem;
+
+            transition: all 0.3s ease;
+
+            cursor: pointer;
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+
+        .feature-card::before {
+
+            content: '';
+
+            position: absolute;
+
+            top: 0;
+
+            left: -100%;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+
+            transition: left 0.5s ease;
+
+        }
+
+
+
+        .feature-card:hover::before {
+
+            left: 100%;
+
+        }
+
+
+
+        .feature-card:hover {
+
+            transform: translateY(-10px);
+
+            box-shadow: 0 20px 40px rgba(33, 150, 243, 0.2);
+
+            border-color: rgba(33, 150, 243, 0.3);
+
+        }
+
+
+
+        .feature-icon {
+
+            width: 60px;
+
+            height: 60px;
+
+            background: linear-gradient(45deg, #2196f3, #21cbf3);
+
+            border-radius: 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 1.5rem;
+
+            font-size: 1.5rem;
+
+        }
+
+
+
+        .feature-card h3 {
+
+            font-size: 1.5rem;
+
+            margin-bottom: 1rem;
+
+            color: #64b5f6;
+
+        }
+
+
+
+        /* Glassmorphism Stats Section */
+
+        .stats-section {
+
+            background: rgba(255, 255, 255, 0.03);
+
+            backdrop-filter: blur(20px);
+
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        }
+
+
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 2rem;
+
+            text-align: center;
+
+        }
+
+
+
+        .stat-item {
+
+            padding: 2rem;
+
+        }
+
+
+
+        .stat-number {
+
+            font-size: 3rem;
+
+            font-weight: bold;
+
+            background: linear-gradient(45deg, #2196f3, #21cbf3);
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+
+            display: block;
+
+            margin-bottom: 0.5rem;
+
+        }
+
+
+
+        /* Interactive Pricing Cards */
+
+        .pricing-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+            gap: 2rem;
+
+            margin-top: 4rem;
+
+        }
+
+
+
+        .pricing-card {
+
+            background: rgba(255, 255, 255, 0.05);
+
+            backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            border-radius: 25px;
+
+            padding: 2.5rem;
+
+            text-align: center;
+
+            position: relative;
+
+            transition: all 0.4s ease;
+
+            cursor: pointer;
+
+        }
+
+
+
+        .pricing-card.featured {
+
+            transform: scale(1.05);
+
+            background: rgba(33, 150, 243, 0.1);
+
+            border: 2px solid rgba(33, 150, 243, 0.3);
+
+        }
+
+
+
+        .pricing-card.featured::before {
+
+            content: 'Most Popular';
+
+            position: absolute;
+
+            top: -15px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            background: linear-gradient(45deg, #2196f3, #21cbf3);
+
+            padding: 0.5rem 1.5rem;
+
+            border-radius: 20px;
+
+            font-size: 0.9rem;
+
+            font-weight: 600;
+
+        }
+
+
+
+        .pricing-card:hover {
+
+            transform: translateY(-15px) scale(1.02);
+
+            box-shadow: 0 25px 50px rgba(33, 150, 243, 0.3);
+
+        }
+
+
+
+        .price {
+
+            font-size: 3rem;
+
+            font-weight: bold;
+
+            color: #64b5f6;
+
+            margin-bottom: 1rem;
+
+        }
+
+
+
+        .price-period {
+
+            opacity: 0.7;
+
+            font-size: 1rem;
+
+        }
+
+
+
+        /* Animated testimonials */
+
+        .testimonials-slider {
+
+            overflow: hidden;
+
+            position: relative;
+
+            margin-top: 4rem;
+
+        }
+
+
+
+        .testimonial-track {
+
+            display: flex;
+
+            animation: scroll 20s linear infinite;
+
+        }
+
+
+
+        @keyframes scroll {
+
+            0% { transform: translateX(0); }
+
+            100% { transform: translateX(-100%); }
+
+        }
+
+
+
+        .testimonial-card {
+
+            min-width: 400px;
+
+            background: rgba(255, 255, 255, 0.05);
+
+            backdrop-filter: blur(10px);
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            border-radius: 20px;
+
+            padding: 2rem;
+
+            margin-right: 2rem;
+
+            position: relative;
+
+        }
+
+
+
+        .testimonial-card::before {
+
+            content: '"';
+
+            position: absolute;
+
+            top: -10px;
+
+            left: 20px;
+
+            font-size: 4rem;
+
+            color: rgba(33, 150, 243, 0.3);
+
+            font-family: serif;
+
+        }
+
+
+
+        /* Floating elements */
+
+        .floating-elements {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            pointer-events: none;
+
+            z-index: 1;
+
+        }
+
+
+
+        .floating-dot {
+
+            position: absolute;
+
+            width: 6px;
+
+            height: 6px;
+
+            background: rgba(33, 150, 243, 0.6);
+
+            border-radius: 50%;
+
+            animation: float-dots 6s ease-in-out infinite;
+
+        }
+
+
+
+        .floating-dot:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+
+        .floating-dot:nth-child(2) { top: 60%; left: 85%; animation-delay: 2s; }
+
+        .floating-dot:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
+
+
+
+        @keyframes float-dots {
+
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.7; }
+
+            50% { transform: translateY(-30px) scale(1.2); opacity: 1; }
+
+        }
+
+
+
+        /* Scroll progress indicator */
+
+        .scroll-progress {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 0%;
+
+            height: 3px;
+
+            background: linear-gradient(90deg, #2196f3, #21cbf3);
+
+            z-index: 1001;
+
+            transition: width 0.1s ease;
+
+        }
+
+
+
+        /* Parallax sections */
+
+        .parallax-section {
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+
+        .parallax-bg {
+
+            position: absolute;
+
+            top: -20%;
+
+            left: -20%;
+
+            width: 140%;
+
+            height: 140%;
+
+            background: radial-gradient(circle, rgba(33, 150, 243, 0.1) 0%, transparent 70%);
+
+            animation: parallax-rotate 20s linear infinite;
+
+        }
+
+
+
+        @keyframes parallax-rotate {
+
+            0% { transform: rotate(0deg); }
+
+            100% { transform: rotate(360deg); }
+
+        }
+
+
+
+        /* Micro-interactions */
+
+        .interactive-element {
+
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        }
+
+
+
+        .interactive-element:hover {
+
+            transform: scale(1.05);
+
+        }
+
+
+
+        /* Mobile responsiveness */
+
+        @media (max-width: 768px) {
+
+            .hero h1 { font-size: 2.5rem; }
+
+            .hero p { font-size: 1.1rem; }
+
+            .nav-links { display: none; }
+
+            .hero-buttons { flex-direction: column; align-items: center; }
+
+            .pricing-card.featured { transform: none; }
+
+            .testimonial-card { min-width: 300px; }
+
+        }
+
+
+
+        /* Custom scrollbar */
+
+        ::-webkit-scrollbar {
+
+            width: 8px;
+
+        }
+
+
+
+        ::-webkit-scrollbar-track {
+
+            background: rgba(255, 255, 255, 0.1);
+
+        }
+
+
+
+        ::-webkit-scrollbar-thumb {
+
+            background: linear-gradient(45deg, #2196f3, #21cbf3);
+
+            border-radius: 4px;
+
+        }
+
+
+
+        /* Loading animation for buttons */
+
+        .btn-loading {
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+
+        .btn-loading::after {
+
+            content: '';
+
+            position: absolute;
+
+            top: 0;
+
+            left: -100%;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+
+            animation: loading-shine 2s infinite;
+
+        }
+
+
+
+        @keyframes loading-shine {
+
+            0% { left: -100%; }
+
+            100% { left: 100%; }
+
+        }
+
+    </style>
+
 </head>
 
 <body>
-  <div class="hero">
-    <h1>Welcome to SynAgent</h1>
-    <p>Boost your business with AI-powered automation and assistance</p>
-    <button class="cta-button" onclick="openChatModal()">💬 Get Started</button>
-  </div>
 
-  <!-- Modal Chat Window -->
-  <div id="chatModal" class="chat-modal">
-    <div class="chat-header">
-      <h3>SynAgent Assistant 🤖</h3>
-      <button onclick="closeChatModal()">✖️</button>
+    <!-- Scroll Progress Indicator -->
+
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+
+
+    <!-- Floating Background Elements -->
+
+    <div class="floating-elements">
+
+        <div class="floating-dot"></div>
+
+        <div class="floating-dot"></div>
+
+        <div class="floating-dot"></div>
+
     </div>
-    <div id="chatLog" class="chat-log"></div>
-    <input type="text" id="chatInput" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter') sendMessage()" />
-  </div>
 
-  <script>
-    function openChatModal() {
-      document.getElementById("chatModal").style.display = "block";
-    }
 
-    function closeChatModal() {
-      document.getElementById("chatModal").style.display = "none";
-    }
 
-    async function sendMessage() {
-      const input = document.getElementById("chatInput");
-      const question = input.value.trim();
-      if (!question) return;
+    <!-- Navigation -->
 
-      const log = document.getElementById("chatLog");
-      log.innerHTML += `<div><b>You:</b> ${question}</div>`;
-      input.value = "";
+    <nav id="navbar">
 
-      try {
-        const response = await fetch("https://synagent-backend.onrender.com/ask", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question })
+        <div class="nav-container">
+
+            <div class="logo">
+
+                <div class="logo-icon"></div>
+
+                SynAgent
+
+            </div>
+
+            <ul class="nav-links">
+
+                <li><a href="#features">Features</a></li>
+
+                <li><a href="#pricing">Pricing</a></li>
+
+                <li><a href="#testimonials">Testimonials</a></li>
+
+                <li><a href="/Spanish.html" target="_blank" rel="noopener noreferrer" class="interactive-element">Español</a></li>
+            </ul>
+
+            <a href="#" class="cta-button interactive-element">Get Started</a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- Hero Section -->
+
+    <section class="hero">
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <div class="hero-logo"></div>
+
+                <h1>SynAgent</h1>
+
+                <p>A smart AI assistant to handle FAQs, automate follow-ups, and streamline your workflow. Experience the future of intelligent automation.</p>
+
+                <div class="hero-buttons">
+
+                    <a href="https://wa.me/17862360774?text=Hi%20SynAgent%2C%20I'm%20interested%20in%20starting%20a%20free%20trial." 
+                   target="_blank" 
+                   class="cta-button btn-loading interactive-element">
+                   💬 Start Free Trial on WhatsApp</a>
+
+                   <a href="https://www.youtube.com/@synagent" target="_blank" rel="noopener noreferrer" class="btn-secondary interactive-element">Watch Demo</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Stats Section -->
+
+    <section class="section stats-section">
+
+        <div class="container">
+
+            <div class="stats-grid">
+
+                <div class="stat-item">
+
+                    <span class="stat-number" data-count="10000">0</span>
+
+                    <p>Happy Customers</p>
+
+                </div>
+
+                <div class="stat-item">
+
+                    <span class="stat-number" data-count="99">0</span>
+
+                    <p>% Uptime</p>
+
+                </div>
+
+                <div class="stat-item">
+
+                    <span class="stat-number" data-count="24">0</span>
+
+                    <p>Hour Support</p>
+
+                </div>
+
+                <div class="stat-item">
+
+                    <span class="stat-number" data-count="500">0</span>
+
+                    <p>Integrations</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Features Section -->
+
+    <section class="section parallax-section" id="features">
+
+        <div class="parallax-bg"></div>
+
+        <div class="container">
+
+            <h2 class="section-title">Powerful Features</h2>
+
+            <div class="features-grid">
+
+                <div class="feature-card interactive-element">
+
+                    <div class="feature-icon">🤖</div>
+
+                    <h3>Smart FAQ Handling</h3>
+
+                    <p>Automatically responds to common questions with intelligent, context-aware answers that learn from your business.</p>
+
+                </div>
+
+                <div class="feature-card interactive-element">
+
+                    <div class="feature-icon">⚡</div>
+
+                    <h3>Automated Follow-ups</h3>
+
+                    <p>Never miss a lead again. Our AI automatically schedules and sends personalized follow-up messages.</p>
+
+                </div>
+
+                <div class="feature-card interactive-element">
+
+                    <div class="feature-icon">🔄</div>
+
+                    <h3>Workflow Integration</h3>
+
+                    <p>Seamlessly integrates with your existing tools and workflows to maximize productivity.</p>
+
+                </div>
+
+                <div class="feature-card interactive-element">
+
+                    <div class="feature-icon">📊</div>
+
+                    <h3>Advanced Analytics</h3>
+
+                    <p>Get detailed insights into customer interactions and optimize your communication strategy.</p>
+
+                </div>
+
+                <div class="feature-card interactive-element">
+
+                    <div class="feature-icon">🛡️</div>
+
+                    <h3>Enterprise Security</h3>
+
+                    <p>Bank-level encryption and security protocols keep your data safe and compliant.</p>
+
+                </div>
+
+                <div class="feature-card interactive-element">
+
+                    <div class="feature-icon">🌐</div>
+
+                    <h3>Multi-Platform Support</h3>
+
+                    <p>Works across all major platforms and communication channels seamlessly.</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Pricing Section -->
+
+    <section class="section" id="pricing">
+
+        <div class="container">
+
+            <h2 class="section-title">Choose Your Plan</h2>
+
+            <div class="pricing-grid">
+
+                <div class="pricing-card interactive-element">
+
+                    <h3>Starter</h3>
+
+                    <div class="price">$19<span class="price-period">/month</span></div>
+
+                    <ul style="list-style: none; padding: 0; margin: 2rem 0;">
+
+                        <li>✓ Up to 50 daily users/month</li>
+
+                        <li>✓ Basic FAQ handling</li>
+
+                        <li>✓ Email support</li>
+
+                        <li>✓ Standard integrations</li>
+
+                    </ul>
+
+                    <a href="#" class="cta-button interactive-element" style="display: block; text-align: center;">Get Started</a>
+
+                </div>
+
+                <div class="pricing-card featured interactive-element">
+
+                    <h3>Professional</h3>
+
+                    <div class="price">$59<span class="price-period">/month</span></div>
+
+                    <ul style="list-style: none; padding: 0; margin: 2rem 0;">
+
+                        <li>✓ Up to 50 daily users/month</li>
+
+                        <li>✓ Advanced AI responses</li>
+
+                        <li>✓ Priority support</li>
+
+                        <li>✓ Advanced analytics</li>
+
+                        <li>✓ Custom integrations</li>
+
+                    </ul>
+
+                    <a href="#" class="cta-button interactive-element" style="display: block; text-align: center;">Start Free Trial</a>
+
+                </div>
+
+                <div class="pricing-card interactive-element">
+
+                    <h3>Enterprise</h3>
+
+                    <div class="price">$159<span class="price-period">/month</span></div>
+
+                    <ul style="list-style: none; padding: 0; margin: 2rem 0;">
+
+                        <li>✓ Unlimited interactions</li>
+
+                        <li>✓ White-label solution</li>
+
+                        <li>✓ 24/7 dedicated support</li>
+
+                        <li>✓ Custom AI training</li>
+
+                        <li>✓ API access</li>
+
+                    </ul>
+
+                    <a href="#" class="cta-button interactive-element" style="display: block; text-align: center;">Contact Sales</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Testimonials Section -->
+
+    <section class="section" id="testimonials">
+
+        <div class="container">
+
+            <h2 class="section-title">What Our Customers Say</h2>
+
+            <div class="testimonials-slider">
+
+                <div class="testimonial-track">
+
+                    <div class="testimonial-card">
+
+                        <p>SynAgent transformed our customer service. Response times decreased by 80% while satisfaction increased dramatically.</p>
+
+                        <h4>Ernesto Gil, CEO</h4>
+
+                    </div>
+
+                    <div class="testimonial-card">
+
+                        <p>The automated follow-ups have increased our conversion rate by 45%. It's like having a dedicated sales assistant 24/7.</p>
+
+                        <h4>Pilly Munoz, Director</h4>
+
+                    </div>
+
+                    <div class="testimonial-card">
+
+                        <p>Implementation was seamless and the ROI was immediate. Our team can now focus on high-value tasks.</p>
+
+                        <h4>Robert Salcedo, Operations Manager</h4>
+
+                    </div>
+
+                    <div class="testimonial-card">
+
+                        <p>The analytics insights have helped us understand our customers better than ever before.</p>
+
+                        <h4>Adonnaia Diaz, Lead</h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CTA Section -->
+
+    <section class="section">
+
+        <div class="container" style="text-align: center;">
+
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Transform Your Workflow?</h2>
+
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Join thousands of businesses already using SynAgent to streamline their operations.</p>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+
+                <a href="#" class="cta-button btn-loading interactive-element" style="padding: 1rem 2rem; font-size: 1.1rem;">Start Your Free Trial</a>
+
+                <a href="#" class="btn-secondary interactive-element" style="padding: 1rem 2rem; font-size: 1.1rem;">Schedule Demo</a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <script>
+
+        // Scroll progress indicator
+
+        window.addEventListener('scroll', () => {
+
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+
         });
 
-        const data = await response.json();
-        log.innerHTML += `<div><b>SynAgent:</b> ${data.answer || data.error}</div>`;
-        log.scrollTop = log.scrollHeight;
-      } catch (error) {
-        log.innerHTML += `<div><b>SynAgent:</b> Failed to connect to assistant.</div>`;
-      }
-    }
-  </script>
+
+
+        // Animated counters
+
+        const animateCounters = () => {
+
+            const counters = document.querySelectorAll('.stat-number');
+
+            counters.forEach(counter => {
+
+                const target = parseInt(counter.getAttribute('data-count'));
+
+                const current = parseInt(counter.textContent);
+
+                const increment = target / 100;
+
+                
+
+                if (current < target) {
+
+                    counter.textContent = Math.ceil(current + increment);
+
+                    setTimeout(animateCounters, 20);
+
+                }
+
+            });
+
+        };
+
+
+
+        // Intersection Observer for animations
+
+        const observerOptions = {
+
+            threshold: 0.1,
+
+            rootMargin: '0px 0px -50px 0px'
+
+        };
+
+
+
+        const observer = new IntersectionObserver((entries) => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    if (entry.target.classList.contains('stats-section')) {
+
+                        animateCounters();
+
+                    }
+
+                    entry.target.style.opacity = '1';
+
+                    entry.target.style.transform = 'translateY(0)';
+
+                }
+
+            });
+
+        }, observerOptions);
+
+
+
+        // Observe sections for scroll animations
+
+        document.querySelectorAll('.section').forEach(section => {
+
+            section.style.opacity = '0';
+
+            section.style.transform = 'translateY(30px)';
+
+            section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+
+            observer.observe(section);
+
+        });
+
+
+
+        // Smooth scrolling for navigation links
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+            anchor.addEventListener('click', function (e) {
+
+                e.preventDefault();
+
+                const target = document.querySelector(this.getAttribute('href'));
+
+                if (target) {
+
+                    target.scrollIntoView({
+
+                        behavior: 'smooth',
+
+                        block: 'start'
+
+                    });
+
+                }
+
+            });
+
+        });
+
+
+
+        // Parallax effect
+
+        window.addEventListener('scroll', () => {
+
+            const scrolled = window.pageYOffset;
+
+            const parallaxElements = document.querySelectorAll('.parallax-bg');
+
+            parallaxElements.forEach(element => {
+
+                const speed = 0.5;
+
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+
+            });
+
+        });
+
+    </script>
+
 </body>
+
 </html>
