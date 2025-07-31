@@ -186,6 +186,7 @@
 
         }
 
+       
 
 
         /* Hero Section */
@@ -1069,7 +1070,8 @@
                 <li><a href="/Spanish.html" target="_blank" rel="noopener noreferrer" class="interactive-element">Español</a></li>
             </ul>
 
-            <a href="#" class="cta-button interactive-element">Get Started</a>
+            <a href="#" onclick="toggleChatbot()">Get Started</a>
+
 
         </div>
 
@@ -1547,6 +1549,15 @@
         });
 
     </script>
+    <div id="chatbot" style="display:none; position:fixed; bottom:20px; right:20px; width:350px; height:500px; background:white; border-radius:10px; overflow:hidden; box-shadow: 0 0 20px rgba(0,0,0,0.5); z-index:1001;">
+ <iframe src="https://chat.openai.com" width="100%" height="100%" frameborder="0"></iframe>
+</div>
+<script>
+  function toggleChatbot() {
+    const bot = document.getElementById('chatbot');
+    bot.style.display = bot.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
 
 </body>
 
