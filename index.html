@@ -1017,6 +1017,78 @@
             100% { left: 100%; }
 
         }
+        .chat-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 350px;
+      background-color: #1a1a1a;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #00c9a7;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 9999;
+    }
+
+    .chat-header {
+      background-color: #00c9a7;
+      padding: 10px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-body {
+      padding: 10px;
+      height: 300px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      background-color: #121212;
+    }
+
+    .chat-footer {
+      display: flex;
+      border-top: 1px solid #444;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+      background-color: #1e1e1e;
+      color: white;
+    }
+
+    .chat-footer button {
+      padding: 10px 15px;
+      background-color: #00c9a7;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: white;
+    }
+
+    .message {
+      margin: 5px 0;
+    }
+
+    .user {
+      color: #00c9a7;
+    }
+
+    .bot {
+      color: #f0f0f0;
+    }
 
     </style>
 
@@ -1406,6 +1478,38 @@
 
     <script>
 
+        const API_URL = "https://synagent-backend.onrender.com/ask";
+
+    function toggleChat() {
+      const chat = document.getElementById("chatBox");
+      chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const question = input.value.trim();
+      if (!question) return;
+
+      const chatBody = document.getElementById("chatBody");
+      chatBody.innerHTML += `<div class="message user"><strong>You:</strong> ${question}</div>`;
+      input.value = "";
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question })
+        });
+
+        const data = await response.json();
+        const answer = data.answer || data.error || "Sorry, something went wrong.";
+        chatBody.innerHTML += `<div class="message bot"><strong>SynAgent:</strong> ${answer}</div>`;
+        chatBody.scrollTop = chatBody.scrollHeight;
+      } catch (err) {
+        chatBody.innerHTML += `<div class="message bot"><strong>SynAgent:</strong> Failed to connect to backend.</div>`;
+      }
+    }
+
         // Scroll progress indicator
 
         window.addEventListener('scroll', () => {
@@ -1415,8 +1519,6 @@
             document.getElementById('scrollProgress').style.width = scrolled + '%';
 
         });
-
-
 
         // Animated counters
 
