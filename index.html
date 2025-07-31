@@ -1521,6 +1521,7 @@
         chatBody.innerHTML += `<div class="message bot"><strong>SynAgent:</strong> Failed to connect to backend.</div>`;
       }
     }
+    
 
         // Scroll progress indicator
 
@@ -1659,19 +1660,57 @@
             });
 
         });
-    <button class="start-button" onclick="toggleChat()">💬 Get Started</button>
-
-      <div class="chat-container" id="chatBox">
-     <div class="chat-header">
-      SynAgent Assistant 🤖
-      <button class="close-btn" onclick="toggleChat()">×</button>
-    </div>
-    <div class="chat-body" id="chatBody"></div>
-    <div class="chat-footer">
-      <input type="text" id="userInput" placeholder="Ask me anything..."/>
-      <button onclick="sendMessage()">Send</button>
-    </div>
+    <div id="chat-container">
+    <span class="close-button" onclick="toggleChat()">✖</span>
+    <div id="chat-messages"></div>
+    <form id="chat-form">
+      <input type="text" id="chat-input" placeholder="Ask me anything..." required />
+      <button type="submit" id="chat-submit">Send</button>
+    </form>
   </div>
+
+  <script>
+    const chatContainer = document.getElementById('chat-container');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+
+    function toggleChat() {
+      chatContainer.style.display = chatContainer.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const userMessage = chatInput.value.trim();
+      if (!userMessage) return;
+
+      addMessage(userMessage, 'user');
+      chatInput.value = '';
+
+      try {
+        const response = await fetch('https://synagent-backend.onrender.com/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: userMessage }),
+        });
+        const data = await response.json();
+        if (data.answer) {
+          addMessage(data.answer, 'assistant');
+        } else {
+          addMessage("Sorry, I couldn't get a response.", 'assistant');
+        }
+      } catch (error) {
+        addMessage("Error connecting to AI assistant.", 'assistant');
+      }
+    });
+
+    function addMessage(text, role) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${role}`;
+      messageDiv.textContent = text;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
 
     </script>
 
